@@ -35,6 +35,8 @@ __published:
         TButton *CheckButton;
         TLabel *VersionLabel;
         TNMHTTP *NMHTTP1;
+        TLabel *Label4;
+        TLabel *Label5;
         void __fastcall FormCreate(TObject *Sender);
         void __fastcall FormKeyPress(TObject *Sender, char &Key);
         void __fastcall Timer1Timer(TObject *Sender);

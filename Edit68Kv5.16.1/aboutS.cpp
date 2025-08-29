@@ -86,7 +86,9 @@ void __fastcall TAboutBox::CheckButtonClick(TObject *Sender)
 {
     try{
     VersionLabel->Font->Style = TFontStyles() << fsBold;
-    NMHTTP1->Get("http://www.easy68k.com/version.txt");
+    //NMHTTP1->Get("http://www.easy68k.com/version.txt");
+    NMHTTP1->Get("https://github.com/shalebridge/EASy68K/blob/master/version.txt");
+
     if(NMHTTP1->Body == VERSION)
         VersionLabel->Caption = "Up to date";
     else
