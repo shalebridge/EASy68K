@@ -41,6 +41,8 @@
  *    Modified: Charles Kelly
  *              Monroe County Community College
  *              http://www.monroeccc.edu/ckelly
+ * 
+ *    Modified: Patrick Edwards
  ************************************************************************/
 
 
@@ -59,6 +61,7 @@ extern int loc;
 char *opParse(char *p, opDescriptor *d, int *errorPtr)
 {
   char *n;
+  char *pn;
   int parenCount;
 
   try {
@@ -194,7 +197,8 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
     // Check for (d,An) or (d,An,Xi)
     if (p[0] == '(' && p[1] != 'P' && p[2] != 'C') {    // CK 2018-2-7
       n = strchr(p,',');
-      if (n) {
+      pn = strchr(p, ')');  // PE 2025-8-25
+      if (n && n < pn) {
         if((n[1] == 'A' && isRegNum(n[2])) || (n[1] == 'S' && n[2] == 'P') ) {
           p++;                  // skip (
           // evaluate displacement, p points to ','
@@ -269,7 +273,8 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
                                                isRegNum(p[5])) {
           d->mode = PCIndex;
           d->index = p[5] - '0';
-          d->data = loc;            // CK 3-8-2018
+          //d->data = loc;            // CK 3-8-2018
+          d->pc_sym = true;         // PE 2025-8-28
           if (p[4] == 'A')
             d->index += 8;
           if (p[6] == '.')
