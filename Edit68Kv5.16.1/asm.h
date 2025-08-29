@@ -31,8 +31,8 @@
 #define isTerm(c)   (c == ',' || c == '/' || c == '-' || isspace(c) || !c || c == '{')
 #define isRegNum(c) ((c >= '0') && (c <= '7'))
 
-const AnsiString VERSION =                     "5.16.01";  // don't forget to change version.txt on easy68k.com
-const char TITLE[] = "EASy68K Editor/Assembler v5.16.01";
+const AnsiString VERSION =                     "5.17.00";  // don't forget to change version.txt on easy68k.com (or github :) )
+const char TITLE[] = "EASy68K Editor/Assembler v5.17.00 - Shalebridge Fork";
 
 /* Status values */
 
@@ -143,6 +143,7 @@ struct opDescriptor
                 // BYTE_SIZE, WORD_SIZE, LONG_SIZE
                 // Also used to prevent MOVEQ, ADDQ & SUBQ optimizations (see OPPARSE.CPP)
   bool backRef;	// True if data field is known on first pass
+  bool pc_sym;	// True if op is PC Index/offset - PE 2025-8-28
 };
 
 
@@ -160,6 +161,7 @@ const int REDEFINABLE	= 0x02;	/* Set for symbols defined by the SET directive */
 const int REG_LIST_SYM	= 0x04;	/* Set for symbols defined by the REG directive */
 const int MACRO_SYM     = 0x08;    // Set for macros
 const int DS_SYM        = 0x10;    // Set for labels defined with DS directive
+const int PC_SYM		= 0x20;		// Set for PC index offset		PE 2025-08-28
 
 /* Instruction table definitions */
 
