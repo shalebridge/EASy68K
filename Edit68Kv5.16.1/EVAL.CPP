@@ -302,54 +302,54 @@ char *evalNumber(char *p, int *numberPtr, bool *refPtr, int *errorPtr)
     *numberPtr = x;
     return p;
   }
-  else if (isalpha(*p) || *p == '.' || *p == '_') {  // *ck 12-8-2005
-    /* Determine the value of a symbol */
-    i = 0;
-    /* Collect characters of the symbol's name
-       (only SIGCHARS characters are significant) */
-    do {
-      if (i < SIGCHARS)
-	name[i++] = *p;
-      p++;
-      //} while (isalnum(*p) || *p == '_' || *p == '$' || *p == '.'); // *ck 12-8-2005 so labels may have dots
-    } while (isalnum(*p) || *p == '_' || *p == '$'); // *ck 2-22-2007 operand.L caused error (no dots in labels)
-    name[i] = '\0';
-    /* Look up the name in the symbol table, resulting
-       in a pointer to the symbol table entry */
-    status = OK;
-    symbol = lookup(name, false, &status);
+    else if (isalpha(*p) || *p == '.' || *p == '_') {  // *ck 12-8-2005
+        /* Determine the value of a symbol */
+        i = 0;
+        /* Collect characters of the symbol's name
+        (only SIGCHARS characters are significant) */
+        do {
+            if (i < SIGCHARS)
+                name[i++] = *p;
+            p++;
+        //} while (isalnum(*p) || *p == '_' || *p == '$' || *p == '.'); // *ck 12-8-2005 so labels may have dots
+        } while (isalnum(*p) || *p == '_' || *p == '$'); // *ck 2-22-2007 operand.L caused error (no dots in labels)
+        name[i] = '\0';
+        /* Look up the name in the symbol table, resulting
+        in a pointer to the symbol table entry */
+        status = OK;
+        symbol = lookup(name, false, &status);
 
-    if (status == OK)
-      /* If symbol was found, and it's not a register
-         list symbol, then return its value */
-      if (!(symbol->flags & REG_LIST_SYM)) {
-	*numberPtr = symbol->value;
+        if (status == OK) {
+            /* If symbol was found, and it's not a register
+            list symbol, then return its value */
+            if (!(symbol->flags & REG_LIST_SYM)) {
+                *numberPtr = symbol->value;
 
-	if (pass2)
-	  *refPtr = (symbol->flags & BACKREF);
-      } else {
-	/* If it is a register list symbol, return error */
-	*numberPtr = 0;
-	NEWERROR(*errorPtr, REG_LIST_SPEC);
-      }
-    else {
-      /* Otherwise return an error */
-      if (pass2) {
-        if( (strncmp(name, ".0", 2)) == 0) {
-          NEWERROR(*errorPtr, ENDI_EXPECTED);
-        } else if( (strncmp(name, ".1", 2)) == 0) {
-          NEWERROR(*errorPtr, ENDW_EXPECTED);
-        } else if( (strncmp(name, ".2", 2)) == 0) {
-          NEWERROR(*errorPtr, ENDF_EXPECTED);
-        } else if( (strncmp(name, ".3", 2)) == 0) {
-          NEWERROR(*errorPtr, REPEAT_EXPECTED);
+                if (pass2)
+                    *refPtr = (symbol->flags & BACKREF);
+            } else {
+                /* If it is a register list symbol, return error */
+	            *numberPtr = 0;
+                NEWERROR(*errorPtr, REG_LIST_SPEC);
+            }
         } else {
-          NEWERROR(*errorPtr, UNDEFINED);
+            /* Otherwise return an error */
+            if (pass2) {
+            if( (strncmp(name, ".0", 2)) == 0) {
+                NEWERROR(*errorPtr, ENDI_EXPECTED);
+            } else if( (strncmp(name, ".1", 2)) == 0) {
+                NEWERROR(*errorPtr, ENDW_EXPECTED);
+            } else if( (strncmp(name, ".2", 2)) == 0) {
+                NEWERROR(*errorPtr, ENDF_EXPECTED);
+            } else if( (strncmp(name, ".3", 2)) == 0) {
+                NEWERROR(*errorPtr, REPEAT_EXPECTED);
+            } else {
+                NEWERROR(*errorPtr, UNDEFINED);
+            }
         }
-      }
-      else
-        NEWERROR(*errorPtr, INCOMPLETE);
-      *refPtr = false;
+        else
+            NEWERROR(*errorPtr, INCOMPLETE);
+        *refPtr = false;
     }
 
     return p;
