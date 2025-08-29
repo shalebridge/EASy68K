@@ -146,18 +146,21 @@ int extWords(opDescriptor *op, int size, int *errorPtr)
     }
     loc += 2;
   }
-  else if (op->mode == AnIndIndex || op->mode == PCIndex) {
-    if (pass2) {
-      disp = op->data;
-      if (op->mode == PCIndex)
-	disp -= loc;
-      output((( (int) (op->size) == LONG_SIZE) ? 0x800 : 0)
-	        | (op->index << 12) | (disp & 0xFF), WORD_SIZE);
-      if (disp < -128 || disp > 127)            //CK 3.7.3 undo 2.9.2 change
-	NEWERROR(*errorPtr, INV_DISP);
-    }
-    loc += 2;
+
+    else if (op->mode == AnIndIndex || op->mode == PCIndex) {
+        if (pass2) {
+            disp = op->data;
+            if (op->mode == PCIndex)
+                if (op->pc_sym)
+                    disp -= loc;
+            output((( (int) (op->size) == LONG_SIZE) ? 0x800 : 0)
+                    | (op->index << 12) | (disp & 0xFF), WORD_SIZE);
+            if (disp < -128 || disp > 127)            //CK 3.7.3 undo 2.9.2 change
+                NEWERROR(*errorPtr, INV_DISP);
+        }
+        loc += 2;
   }
+
   else if (op->mode == AbsShort) {
     if (pass2) {
       output(op->data & 0xFFFF, WORD_SIZE);
