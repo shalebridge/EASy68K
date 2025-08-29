@@ -63,10 +63,14 @@ void __fastcall TAboutBox::Timer1Timer(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-
 void __fastcall TAboutBox::Label1Click(TObject *Sender)
 {
     ShellExecute(NULL,"open", "http://www.easy68k.com", NULL, NULL, SW_SHOW);
+}
+
+void __fastcall TAboutBox::Label7Click(TObject *Sender)
+{
+    ShellExecute(NULL,"open", "https://github.com/shalebridge/EASy68K/tree/master", NULL, NULL, SW_SHOW);
 }
 //---------------------------------------------------------------------------
 
@@ -86,8 +90,7 @@ void __fastcall TAboutBox::CheckButtonClick(TObject *Sender)
 {
     try{
     VersionLabel->Font->Style = TFontStyles() << fsBold;
-    //NMHTTP1->Get("http://www.easy68k.com/version.txt");
-    NMHTTP1->Get("https://github.com/shalebridge/EASy68K/blob/master/version.txt");
+    NMHTTP1->Get("http://www.easy68k.com/version.txt");
 
     if(NMHTTP1->Body == VERSION)
         VersionLabel->Caption = "Up to date";

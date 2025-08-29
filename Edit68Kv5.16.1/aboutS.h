@@ -28,7 +28,6 @@ __published:
 	TButton *OKButton;
         TLabel *Label2;
         TLabel *Label3;
-        TLabel *Label7;
         TLabel *Label1;
         TImage *img;
         TTimer *Timer1;
@@ -37,10 +36,13 @@ __published:
         TNMHTTP *NMHTTP1;
         TLabel *Label4;
         TLabel *Label5;
+        TLabel *Label6;
+        TLabel *Label7;
         void __fastcall FormCreate(TObject *Sender);
         void __fastcall FormKeyPress(TObject *Sender, char &Key);
         void __fastcall Timer1Timer(TObject *Sender);
         void __fastcall Label1Click(TObject *Sender);
+        void __fastcall Label7Click(TObject *Sender);
         void __fastcall Label1MouseEnter(TObject *Sender);
         void __fastcall Label1MouseLeave(TObject *Sender);
         void __fastcall CheckButtonClick(TObject *Sender);
