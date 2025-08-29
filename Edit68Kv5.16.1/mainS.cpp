@@ -794,7 +794,7 @@ void __fastcall TMain::FormClose(TObject *Sender, TCloseAction &Action)
     if (HHLibrary != 0)
     {
       __HtmlHelp(0, NULL, HH_CLOSE_ALL, 0);
-      Sleep(0);
+      Sleep((int)0);
       __HtmlHelp(NULL, NULL, HH_UNINITIALIZE, (DWORD)m_Cookie);
       ::FreeLibrary(HHLibrary);
       HHLibrary = 0;

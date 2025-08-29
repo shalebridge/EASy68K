@@ -1,8 +1,8 @@
 object Main: TMain
-  Left = 513
-  Top = 106
+  Left = 604
+  Top = 289
   Width = 567
-  Height = 342
+  Height = 343
   HelpContext = 1000
   Caption = 'EASy68K Editor '
   Color = clAppWorkSpace

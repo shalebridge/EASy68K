@@ -58,8 +58,8 @@ object TextStuff: TTextStuff
   TextHeight = 13
   object Splitter3: TSplitter
     Left = 0
-    Top = 409
-    Width = 658
+    Top = 416
+    Width = 666
     Height = 9
     Cursor = crVSplit
     Align = alBottom
@@ -67,8 +67,8 @@ object TextStuff: TTextStuff
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 390
-    Width = 658
+    Top = 397
+    Width = 666
     Height = 19
     Constraints.MaxHeight = 19
     Constraints.MinHeight = 19
@@ -96,8 +96,8 @@ object TextStuff: TTextStuff
   end
   object Messages: TListView
     Left = 0
-    Top = 418
-    Width = 658
+    Top = 425
+    Width = 666
     Height = 5
     Hint = 'double click error to highlight in source'
     Align = alBottom
@@ -124,8 +124,8 @@ object TextStuff: TTextStuff
   end
   object ProgressBar: TProgressBar
     Left = 0
-    Top = 372
-    Width = 658
+    Top = 379
+    Width = 666
     Height = 18
     Align = alBottom
     Min = 0
@@ -136,8 +136,8 @@ object TextStuff: TTextStuff
   object SourceText: TRichEditPlus
     Left = 0
     Top = 0
-    Width = 658
-    Height = 372
+    Width = 666
+    Height = 379
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
