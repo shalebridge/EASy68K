@@ -58,24 +58,32 @@ extern int loc;
 //#define isTerm(c)   (isspace(c) || (c == ',') || c == '\0')
 //#define isRegNum(c) ((c >= '0') && (c <= '7'))
 
+#define isLabelChar(c) (c == '_' || c == '$')
+#define isOperator(c) (ch == '+' || ch == '-')
 
-static bool contains_symbol(const char *start, const char *end) {
+static bool containsSymbol(const char *start, const char *end) {
+    char ch;
+    char *t;
     for (const char *s = start; s < end; s++) {
+        /* Local label */
         if (*s == '.') {
-            if (s < end && isalnum((unsigned char)*s) || *s == '_' || *s == '$' || *s == '*') {
+            t = (char*)s + 1;
+            if (t < end && isalnum(*t) || isLabelChar(*t)) {
                 return true;
             }
-
-        } else if (isalpha((unsigned char)*s) || *s == '_' || *s == '$') {
+        } else if (isalpha((unsigned char)*s) || isLabelChar(*s)) {
             return true;
+
+        /* If no symbol found, accept a '*' that is either the first char of disp
+        or immediately follows one of ' (,+-' */
         } else if (*s == '*') {
-            /* If no symbol found, accept a '*' that is either the first char of disp
-                or immediately follows one of ' (,+- */
-            if (s == start) 
+            if (s == start) {
                 return true;
-            char prev = *(s - 1);
-            if (prev == ' ' || prev == '(' || prev == ',' || prev == '+' || prev == '-')
+            }
+            ch = *(s - 1);
+            if (isspace(ch) || ch == '(' || ch == ',' || isOperator(ch)){
                 return true;
+            }
         }
     }
     return false;
@@ -277,7 +285,7 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
         n = strchr(p,',');
         n = (n < strchr(p, ')')) ? n : NULL;    // PE 2025-8-28
         if (n && n[1] == 'P' && n[2] == 'C') {    
-            if (contains_symbol(p+1, n))        // PE 2025-8-28
+            if (containsSymbol(p+1, n))        // PE 2025-8-28
                 sym_in_pc = true; 
             p++;                  // skip (
             // evaluate displacement, p points to ','
