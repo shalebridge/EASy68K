@@ -1,6 +1,6 @@
 00001000 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.17.00 - Shalebridge Fork
-Created On: 8/29/2025 11:22:49 PM
+Created On: 8/29/2025 11:39:47 PM
 
 00001000                             1          ORG     $1000
 00001000                             2  START
@@ -24,9 +24,9 @@ Created On: 8/29/2025 11:22:49 PM
 00001030  203B 28F4                 20          MOVE.L  (-12,PC,D2.L),D0        ; 203B 28F4
 00001034                            21  
 00001034                            22  ; ---- D0.W as index (ext top nibble = 0x0) & various signed disps ----
-00001034  203B 1000                 23          MOVE.L  (0,PC,D1.W),D0          ; 203B 0000
-00001038  203B 1001                 24          MOVE.L  (1,PC,D1.W),D0          ; 203B 0001
-0000103C  203B 1002                 25          MOVE.L  (2,PC,D1.W),D0          ; 203B 0002
+00001034  203B 1000                 23          MOVE.L  (0,PC,D1.W),D0          ; 203B 1000
+00001038  203B 1001                 24          MOVE.L  (1,PC,D1.W),D0          ; 203B 1001
+0000103C  203B 1002                 25          MOVE.L  (2,PC,D1.W),D0          ; 203B 1002
 00001040  203B 002C                 26          MOVE.L  (44,PC,D0.W),D0         ; 203B 002C
 00001044  203B 00F4                 27          MOVE.L  (-12,PC,D0.W),D0        ; 203B 00F4
 00001048  203B 000D                 28          MOVE.L  (13,PC,D0.W),D0         ; 203B 000D

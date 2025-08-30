@@ -20,9 +20,9 @@ next2:
         MOVE.L  (-12,PC,D2.L),D0        ; 203B 28F4
 
 ; ---- D0.W as index (ext top nibble = 0x0) & various signed disps ----
-        MOVE.L  (0,PC,D1.W),D0          ; 203B 0000
-        MOVE.L  (1,PC,D1.W),D0          ; 203B 0001
-        MOVE.L  (2,PC,D1.W),D0          ; 203B 0002
+        MOVE.L  (0,PC,D1.W),D0          ; 203B 1000
+        MOVE.L  (1,PC,D1.W),D0          ; 203B 1001
+        MOVE.L  (2,PC,D1.W),D0          ; 203B 1002
         MOVE.L  (44,PC,D0.W),D0         ; 203B 002C
         MOVE.L  (-12,PC,D0.W),D0        ; 203B 00F4
         MOVE.L  (13,PC,D0.W),D0         ; 203B 000D
@@ -60,6 +60,7 @@ afterSYMBA:
 
         
         END START
+
 
 
 
