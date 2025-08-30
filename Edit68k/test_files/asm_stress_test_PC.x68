@@ -1,11 +1,12 @@
         ORG     $1000
 START
 ; ---- Test vanilla PC and * as both current location and as multiply ----
-        MOVE.L (PC),d0                  ; 203A 0000
-        MOVE.L 4(PC),d0                 ; 203A 0004 ; These should
-        MOVE.L (4,PC),d0                ; 203A 0004 ;  be the same
-        MOVE.L (*+4*2,pc,d0.w),d1       ; 223B 0006
-        MOVE.L (4+*,pc,d0.w),d1         ; 223B 0002
+        MOVE.L (PC),D0                  ; 203A 0000
+        MOVE.L 4(PC),D0                 ; 203A 0004 ; These should
+        MOVE.L (4,PC),D0                ; 203A 0004 ;  be the same
+        MOVE.L (*+4*2,PC,D3.W),D1       ; 223B 3006
+        MOVE.L (4+*,PC,D4.W),D1         ; 223B 4002
+        MOVE.L (2+*+2,PC,D5.W),D1       ; 223B 5002
 ; ---- D2.W as index (ext word top nibble = 0x2, size=W so +0x0000) ----
         ADD.B   (next+2,PC,D2.W),D3     ; D63B 2008   ; disp = +2
         ADD.B   (2+next,PC,D2.W),D3     ; D63B 2004   ; disp = +2
@@ -31,7 +32,17 @@ next2:
 ; ---- Forward/backward label sensitivity ----
         ADD.B   (next3,PC,D2.W),D3      ; D63B 2002
 next3:  NOP
-        MOVE.L  (next3,PC,D2.W),D3      ; 263B 20FC   ; back-ref: disp = -2 - sizeof(nop) -> 0xFC
+        MOVE.L  (next3,PC,D2.W),D3      ; 263B 20FC
+        
+; ---- Forward/backward local label sensitivity ----
+        ADD.B   (.next4,PC,D2.W),D3      ; D63B 2002
+.next4:  NOP
+        MOVE.L  (.next4,PC,D2.W),D3      ; 263B 20FC
+        
+; ---- Forward/backward local label sensitivity with offset ----
+        ADD.B   (2+.next5,PC,D2.W),D3      ; D63B 2004
+.next5:  NOP
+        MOVE.L  (.next5+2,PC,D2.W),D3      ; 263B 20FE
         
 ; ---- Range checking ----
         MOVE.L  (127,PC,D0.W),D0        ; 203B 007F
@@ -60,6 +71,12 @@ afterSYMBA:
 
         
         END START
+
+
+
+
+
+
 
 
 
