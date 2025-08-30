@@ -1,0 +1,44 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 8/30/2025 6:39:48 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * EASy68k Assembler Stress Test
+00000000                             3  *   Tests parenthesized expression bug
+00000000                             4  *-----------------------------------------------------------
+00001000                             5      ORG    $1000
+00001000                             6  START:                  ; first instruction of program
+00001000                             7      
+Line 8 ERROR: Invalid syntax
+00001000                             8      LEA ($0FFF).w,A0
+Line 9 ERROR: Invalid syntax
+00001000                             9      LEA ($1FFF).w,A0
+00001000                            10  
+Line 11 WARNING: Forcing SHORT addressing disables range checking of extension word
+00001000  41F8 CFFF                 11      LEA ($CFFF).w,A0
+Line 12 ERROR: Invalid syntax
+00001004                            12      LEA ($DFFF).w,A0
+Line 13 ERROR: Invalid syntax
+00001004                            13      LEA ($EFFF).w,A0
+00001004                            14      
+Line 15 ERROR: Invalid syntax
+00001004                            15      LEA ($7FFF).w,A0
+Line 16 WARNING: Forcing SHORT addressing disables range checking of extension word
+00001004  41F8 7FFF                 16      LEA ($7FFF).w, A0
+00001008                            17      
+Line 18 ERROR: Invalid syntax
+00001008                            18      LEA ($00007FFF).w,A0
+Line 19 WARNING: Forcing SHORT addressing disables range checking of extension word
+00001008  41F8 7FFF                 19      LEA ($00007FFF).w, A0   
+0000100C                            20  
+0000100C                            21  
+0000100C                            22      END    START        ; last line of source
+
+6 errors detected
+3 warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               1000
