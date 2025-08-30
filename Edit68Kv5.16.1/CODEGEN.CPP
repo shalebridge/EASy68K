@@ -139,7 +139,8 @@ int extWords(opDescriptor *op, int size, int *errorPtr)
     if (pass2) {
       disp = op->data;
       if (op->mode == PCDisp)
-	disp -= loc;
+            if (op->pc_sym)         // PE 2025-8-29
+                disp -= loc;
       output(disp & 0xFFFF, WORD_SIZE);
       if (disp < -32768 || disp > 32767)        //CK 3.7.3 undo 2.9.2 change
 	NEWERROR(*errorPtr, INV_DISP);
@@ -151,7 +152,7 @@ int extWords(opDescriptor *op, int size, int *errorPtr)
         if (pass2) {
             disp = op->data;
             if (op->mode == PCIndex)
-                if (op->pc_sym)
+                if (op->pc_sym)         // PE 2025-8-29
                     disp -= loc;
             output((( (int) (op->size) == LONG_SIZE) ? 0x800 : 0)
                     | (op->index << 12) | (disp & 0xFF), WORD_SIZE);

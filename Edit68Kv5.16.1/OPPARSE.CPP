@@ -58,14 +58,39 @@ extern int loc;
 //#define isTerm(c)   (isspace(c) || (c == ',') || c == '\0')
 //#define isRegNum(c) ((c >= '0') && (c <= '7'))
 
+
+static bool contains_symbol(const char *start, const char *end) {
+    for (const char *s = start; s < end; s++) {
+        if (*s == '.') {
+            if (s < end && isalnum((unsigned char)*s) || *s == '_' || *s == '$' || *s == '*') {
+                return true;
+            }
+
+        } else if (isalpha((unsigned char)*s) || *s == '_' || *s == '$') {
+            return true;
+        } else if (*s == '*') {
+            /* If no symbol found, accept a '*' that is either the first char of disp
+                or immediately follows one of ' (,+- */
+            if (s == start) 
+                return true;
+            char prev = *(s - 1);
+            if (prev == ' ' || prev == '(' || prev == ',' || prev == '+' || prev == '-')
+                return true;
+        }
+    }
+    return false;
+}
+
 char *opParse(char *p, opDescriptor *d, int *errorPtr)
 {
   char *n;
-  char *pn;
   int parenCount;
+  bool sym_in_pc = false;
 
   try {
     d->size = 0;
+    d->pc_sym = false;  // PE 2025-8-29
+    d->data = 0;        // PE 2025-8-29
     // if addressing mode in ( )
     // remove spaces inside parenthesis       CK Oct-26-2008
     if (p[0] == '(' || p[1] == '(') {
@@ -196,9 +221,8 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
 
     // Check for (d,An) or (d,An,Xi)
     if (p[0] == '(' && p[1] != 'P' && p[2] != 'C') {    // CK 2018-2-7
-      n = strchr(p,',');
-      pn = strchr(p, ')');  // PE 2025-8-25
-      if (n && n < pn) {
+      n = strchr(p,','); 
+      if (n && n < strchr(p, ')')) {                // PE 2025-8-25
         if((n[1] == 'A' && isRegNum(n[2])) || (n[1] == 'S' && n[2] == 'P') ) {
           p++;                  // skip (
           // evaluate displacement, p points to ','
@@ -206,101 +230,106 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
         }
       }
 
-      // Check for (d,An) or (d,An,Xi)
-      if ( (p[1] == 'A' && isRegNum(p[2])) || (p[1] == 'S' && p[2] == 'P') ) {
-        if (p[1] == 'S')
-          d->reg = 7;
-        else
-          d->reg = p[2] - '0';
-        // Check for (d,An)
-        if (p[3] == ')') {
-          d->mode = AnIndDisp;
-          return p+4;
-        }
-        // Check for (d,An,Xi)
-        else if (p[3] == ',' && (p[4] == 'A' || p[4] == 'D') && isRegNum(p[5])) {
-          d->mode = AnIndIndex;
-          d->index = p[5] - '0';
-          if (p[4] == 'A')
-            d->index += 8;
-          if (p[6] == '.')
-            // Determine size of index register
-            if (p[7] == 'W') {
-              d->size = WORD_SIZE;
-              return p+9;
-            } else if (p[7] == 'L') {
-              d->size = LONG_SIZE;
-              return p+9;
-            } else {
-              NEWERROR(*errorPtr, SYNTAX);
-              return NULL;
+        // Check for (d,An) or (d,An,Xi)
+        if ( (p[1] == 'A' && isRegNum(p[2])) || (p[1] == 'S' && p[2] == 'P') ) {
+            if (p[1] == 'S')
+                d->reg = 7;
+            else
+                d->reg = p[2] - '0';
+            // Check for (d,An)
+            if (p[3] == ')') {
+                d->mode = AnIndDisp;
+                return p+4;
             }
-          else if (p[6] == ')') {
-            // Default size of index register is Word
-            d->size = WORD_SIZE;
-            return p+7;
-          } else {
-            NEWERROR(*errorPtr, SYNTAX);
-            return NULL;
-          }
+            // Check for (d,An,Xi)
+            else if (p[3] == ',' && (p[4] == 'A' || p[4] == 'D') && isRegNum(p[5])) {
+                d->mode = AnIndIndex;
+                d->index = p[5] - '0';
+                if (p[4] == 'A')
+                    d->index += 8;
+                if (p[6] == '.')
+                    // Determine size of index register
+                    if (p[7] == 'W') {
+                        d->size = WORD_SIZE;
+                        return p+9;
+                    } else if (p[7] == 'L') {
+                        d->size = LONG_SIZE;
+                        return p+9;
+                    } else {
+                        NEWERROR(*errorPtr, SYNTAX);
+                        return NULL;
+                    }
+                else if (p[6] == ')') {
+                    // Default size of index register is Word
+                    d->size = WORD_SIZE;
+                    return p+7;
+                } else {
+                    NEWERROR(*errorPtr, SYNTAX);
+                    return NULL;
+                }
+            }
         }
-      }
     }
 
     // Check for PC relative (disp,PC) or (disp,PC,Xi)    ck 4-16-2002
     //    PC relative disp(PC) & disp(PC,Xi) is checked later
     if (p[0] == '(') {
-      n = strchr(p,',');
-      if (n && n[1] == 'P' && n[2] == 'C') {
-        p++;                  // skip (
-        // evaluate displacement, p points to ','
-        p = eval(p, &(d->data), &(d->backRef), errorPtr);
-      }
+        n = strchr(p,',');
+        n = (n < strchr(p, ')')) ? n : NULL;    // PE 2025-8-28
+        if (n && n[1] == 'P' && n[2] == 'C') {    
+            if (contains_symbol(p+1, n))        // PE 2025-8-28
+                sym_in_pc = true; 
+            p++;                  // skip (
+            // evaluate displacement, p points to ','
+            p = eval(p, &(d->data), &(d->backRef), errorPtr);
+        }
 
-      // Check for PC relative (PC) or (PC,Xi)
-      if (p[1] == 'P' && p[2] == 'C') {
-        if (n == NULL) {                // if no displacement
-          d->data = 0;
-          d->backRef = true;
-        }
-        // Check for plain PC relative
-        if (p[3] == ')') {
-          d->mode = PCDisp;
-          return p+4;
-        }
-        // Check for PC relative with index
-        else if (p[3] == ',' && (p[4] == 'A' || p[4] == 'D') &&
-                                               isRegNum(p[5])) {
-          d->mode = PCIndex;
-          d->index = p[5] - '0';
-          //d->data = loc;            // CK 3-8-2018
-          d->pc_sym = true;         // PE 2025-8-28
-          if (p[4] == 'A')
-            d->index += 8;
-          if (p[6] == '.')
-            // Determine size of index register
-            if (p[7] == 'W') {
-              d->size = WORD_SIZE;
-              return p+9;
-            } else if (p[7] == 'L') {
-              d->size = LONG_SIZE;
-              return p+9;
-            } else {
-              NEWERROR(*errorPtr, SYNTAX);
-              return NULL;
+        // Check for PC relative (PC) or (PC,Xi)
+        if (p[1] == 'P' && p[2] == 'C') {
+            if (n == NULL) {                // if no displacement
+                d->data = 0;
+                d->backRef = true;
             }
-          else if (p[6] == ')') {
-            // Default size of index register is Word
-            d->size = WORD_SIZE;
-            return p+7;
-          } else {
-            NEWERROR(*errorPtr, SYNTAX);
-            return NULL;
-          }
-        }
-      }
-    }
+            // Check for plain PC relative
+            if (p[3] == ')') {
+                d->mode = PCDisp;
+                return p+4;
+            }
+            // Check for PC relative with index
+            else if (p[3] == ',' && (p[4] == 'A' || p[4] == 'D') &&
+                isRegNum(p[5])) {
+                d->mode = PCIndex;
+                d->index = p[5] - '0';
+                //d->data = loc;            // CK 3-8-2018
+                d->pc_sym = sym_in_pc;       // PE 2025-8-28
 
+                if (p[4] == 'A')
+                    d->index += 8;
+                if (p[6] == '.'){
+                    // Determine size of index register
+                    if (p[7] == 'W') {
+                        d->size = WORD_SIZE;
+                        return p+9;
+                    } else if (p[7] == 'L') {
+                        d->size = LONG_SIZE;
+                        return p+9;
+                    } else {
+                        NEWERROR(*errorPtr, SYNTAX);
+                        return NULL;
+                    }
+                }
+                else if (p[6] == ')') {
+                    // Default size of index register is Word
+                    d->size = WORD_SIZE;
+                    return p+7;
+                } else {
+                    NEWERROR(*errorPtr, SYNTAX);
+                    return NULL;
+                }
+            }
+        }
+    }
+            
     // Check for Status Register direct
     if (p[0] == 'S' && p[1] == 'R' && isTerm(p[2])) {
       d->mode = SRDirect;
