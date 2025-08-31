@@ -71,7 +71,7 @@ static bool containsSymbol(const char *start, const char *end) {
             if (t < end && isalnum(*t) || isLabelChar(*t)) {
                 return true;
             }
-        } else if (isalpha((unsigned char)*s) || isLabelChar(*s)) {
+        } else if (isalpha((unsigned char)*s)) {
             return true;
 
         /* If no symbol found, accept a '*' that is either the first char of disp
@@ -93,7 +93,6 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
 {
   char *n;
   int parenCount;
-  bool sym_in_pc = false;
 
   try {
     d->size = 0;
@@ -286,7 +285,7 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
         n = (n < strchr(p, ')')) ? n : NULL;    // PE 2025-8-28
         if (n && n[1] == 'P' && n[2] == 'C') {    
             if (containsSymbol(p+1, n))        // PE 2025-8-28
-                sym_in_pc = true; 
+                 d->pc_sym = true;
             p++;                  // skip (
             // evaluate displacement, p points to ','
             p = eval(p, &(d->data), &(d->backRef), errorPtr);
@@ -308,8 +307,7 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
                 isRegNum(p[5])) {
                 d->mode = PCIndex;
                 d->index = p[5] - '0';
-                //d->data = loc;            // CK 3-8-2018
-                d->pc_sym = sym_in_pc;       // PE 2025-8-28
+                //d->data = loc;            // CK 3-8-2018 // Removed PE 2025-8-28
 
                 if (p[4] == 'A')
                     d->index += 8;
