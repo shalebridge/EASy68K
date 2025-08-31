@@ -810,6 +810,7 @@ instruction instTable[] = {
 	{ "EOR", eorfl, flavorCount(eorfl), true, NULL },
 	{ "EORI", eorifl, flavorCount(eorifl), true, NULL },
 	{ "EQU", NULL, 0, false, equ },
+	{ "EVEN", NULL, 0, false, align_even},
 	{ "EXG", exgfl, flavorCount(exgfl), true, NULL },
 	{ "EXT", extfl, flavorCount(extfl), true, NULL },
         { "FAIL", NULL, 0, false, failError },

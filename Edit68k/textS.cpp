@@ -1303,12 +1303,12 @@ int checkRelational(int n) {
 // This parser for syntax highlighting only
 bool __fastcall TTextStuff::highlightLine(tokenT &tokenType)
 {
-  const int DIRECTIVE_COUNT = 32;       // 32 directives
+  const int DIRECTIVE_COUNT = 33;       // 33 directives
   const int NO_OPERAND_I = 7;           // first 7 have no operand
   static char *directives[DIRECTIVE_COUNT] =
                 {"ENDC","ENDM","LIST","NOLIST",
                  "PAGE","MEXIT","SIMHALT",      // first 7 have no operand
-                 "DC","DCB","DS","END","EQU","FAIL",
+                 "DC","DCB","DS","END","EQU","FAIL", "EVEN", // EVEN - PE 2025-8-30
                  "INCLUDE","MACRO","MEMORY","OFFSET","OPT","ORG",
                  "REG","SECTION","SET","IFC","IFNC","IFEQ","IFNE","INCBIN",
                  "IFLT","IFLE","IFGT","IFGE","NARG"};

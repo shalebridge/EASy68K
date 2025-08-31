@@ -1040,4 +1040,24 @@ int page(int size, char *label, char *op, int *errorPtr)
 
   return NORMAL;
 }
-
+
+//**********************************************************************
+//	EVEN directive (pe)
+// Align to the next byte if ODD
+//**********************************************************************
+int align_even(int size, char *label, char *op, int *errorPtr)
+{
+    if (size)
+        NEWERROR(*errorPtr, INV_SIZE_CODE);
+
+    listLoc();
+
+    // Define the label attached to this directive, if any
+    if (*label)
+        define(label, loc, pass2, true, errorPtr);
+
+    if (loc & 1)
+        loc++;
+
+    return NORMAL;
+}

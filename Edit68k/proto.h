@@ -199,4 +199,5 @@ int listOn(int, char *, char *, int *);
 int listOff(int, char *, char *, int *);
 
 int memory(int, char *, char *, int *);
-
+
+int align_even(int, char *, char *, int *);  //pe 2025-8-30
