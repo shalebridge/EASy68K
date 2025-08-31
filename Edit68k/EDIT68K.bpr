@@ -3,7 +3,7 @@
 <PROJECT>
   <MACROS>
     <VERSION value="BCB.06.00"/>
-    <PROJECT value="E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\output\EDIT68K.exe"/>
+    <PROJECT value="C:\source\EASy68k\Edit68k\output\EDIT68K.exe"/>
     <OBJFILES value="EDIT68K.obj textS.obj aboutS.obj ASSEMBLE.obj assembleS.obj BUILD.obj 
       chksaveS.obj CODEGEN.obj DIRECTIV.obj ERROR.obj EVAL.obj GLOBALS.obj 
       INSTLOOK.obj INSTTABL.obj LISTING.obj MACRO.obj mainS.obj MOVEM.obj 
@@ -34,14 +34,14 @@
     <USERDEFINES value=""/>
     <SYSDEFINES value="NO_STRICT"/>
     <MAINSOURCE value="EDIT68K.cpp"/>
-    <INCLUDEPATH value="$(BCB)\Lib;$(BCB)\include;$(BCB)\include\vcl;E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\RichEditPlus"/>
+    <INCLUDEPATH value="$(BCB)\Lib;$(BCB)\include;$(BCB)\include\vcl;C:\source\EASy68k\Edit68k\RichEditPlus"/>
     <LIBPATH value="$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib"/>
     <WARNINGS value="-w-pch -w-par -w-8027 -w-8026"/>
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
     <IDLCFLAGS value="-I$(BCB)\Lib -I$(BCB)\include -I$(BCB)\include\vcl 
-      -IE:\EASy68K-master\EASy68k\Edit68Kv5.16.1\RichEditPlus -src_suffix cpp -boa"/>
+      -IC:\source\EASy68k\Edit68k\RichEditPlus -src_suffix cpp -boa"/>
     <CFLAG1 value="-O2 -H=c:\PROGRA~1\borland\CBUILD~1\lib\vcl60.csm -Hc -Vx -Ve -X- -a8 -b- 
       -k- -vi -c -tW -tWM"/>
     <PFLAGS value="-$Y- -$L- -$D- -$A8 -v -JPHNE -M"/>
@@ -95,8 +95,8 @@
 IncludeVerInfo=1
 AutoIncBuild=0
 MajorVer=5
-MinorVer=16
-Release=1
+MinorVer=17
+Release=0
 Build=0
 Debug=0
 PreRelease=0
@@ -107,25 +107,26 @@ Locale=1033
 CodePage=1252
 
 [Version Info Keys]
-CompanyName=EASy68K.com
-FileDescription=EASy68K Editor/Assembler
-FileVersion=5.16.1.0
+CompanyName=Shalebridge
+FileDescription=EASy68K Editor/Assembler Fork
+FileVersion=5.17.0.0
 InternalName=
 LegalCopyright=GNU general public use license
 LegalTrademarks=
 OriginalFilename=
-ProductName=EASy68K
-ProductVersion=5.16.01
-Comments=
+ProductName=EASy68K - Shalebridge Fork
+ProductVersion=5.17.00
+Comments=Based on EASy68k v5.16.01
 
 [HistoryLists\hlIncludePath]
-Count=6
-Item0=$(BCB)\Lib;$(BCB)\include;$(BCB)\include\vcl;E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\RichEditPlus
-Item1=$(BCB)\Lib;$(BCB)\include;$(BCB)\include\vcl
-Item2=$(BCB)\include;$(BCB)\include\vcl
-Item3=..\Edit68Kv2.0x old with new DC directives;C:\Program Files\Borland\CBuilder6\Projects;$(BCB)\include;$(BCB)\include\vcl
-Item4=C:\Program Files\Borland\CBuilder6\Projects;$(BCB)\include;$(BCB)\include\vcl
-Item5=C:\Program Files\Borland\CBuilder5\Projects;$(BCB)\include;$(BCB)\include\vcl
+Count=7
+Item0=$(BCB)\Lib;$(BCB)\include;$(BCB)\include\vcl;C:\source\EASy68k\Edit68k\RichEditPlus
+Item1=$(BCB)\Lib;$(BCB)\include;$(BCB)\include\vcl;E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\RichEditPlus
+Item2=$(BCB)\Lib;$(BCB)\include;$(BCB)\include\vcl
+Item3=$(BCB)\include;$(BCB)\include\vcl
+Item4=..\Edit68Kv2.0x old with new DC directives;C:\Program Files\Borland\CBuilder6\Projects;$(BCB)\include;$(BCB)\include\vcl
+Item5=C:\Program Files\Borland\CBuilder6\Projects;$(BCB)\include;$(BCB)\include\vcl
+Item6=C:\Program Files\Borland\CBuilder5\Projects;$(BCB)\include;$(BCB)\include\vcl
 
 [HistoryLists\hlLibraryPath]
 Count=5
@@ -140,9 +141,11 @@ Count=1
 Item0=$(BCB)\source\vcl
 
 [HistoryLists\hlFinalOutputDir]
-Count=2
-Item0=E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\output\
-Item1=E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\output
+Count=4
+Item0=C:\source\EASy68k\Edit68k\output\
+Item1=C:\source\EASy68k\Edit68k\output
+Item2=E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\output\
+Item3=E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\output
 
 [Debugging]
 DebugSourceDirs=$(BCB)\source\vcl
