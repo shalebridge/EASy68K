@@ -3,12 +3,16 @@
 <PROJECT>
   <MACROS>
     <VERSION value="BCB.06.00"/>
-    <PROJECT value="C:\source\EASy68k\Edit68k\output\EDIT68K.exe"/>
-    <OBJFILES value="EDIT68K.obj textS.obj aboutS.obj ASSEMBLE.obj assembleS.obj BUILD.obj 
-      chksaveS.obj CODEGEN.obj DIRECTIV.obj ERROR.obj EVAL.obj GLOBALS.obj 
-      INSTLOOK.obj INSTTABL.obj LISTING.obj MACRO.obj mainS.obj MOVEM.obj 
-      OBJECT.obj OPPARSE.obj optionsS.obj SYMBOL.obj STRUCTURED.obj 
-      editorOptions.obj help.obj findDialogS.obj replaceDialogS.obj"/>
+    <PROJECT value="C:\source\EASy68k\output\EDIT68K.exe"/>
+    <OBJFILES value="..\temp\EDIT68K.obj ..\temp\textS.obj ..\temp\aboutS.obj 
+      ..\temp\ASSEMBLE.obj ..\temp\assembleS.obj ..\temp\BUILD.obj 
+      ..\temp\chksaveS.obj ..\temp\CODEGEN.obj ..\temp\DIRECTIV.obj 
+      ..\temp\ERROR.obj ..\temp\EVAL.obj ..\temp\GLOBALS.obj 
+      ..\temp\INSTLOOK.obj ..\temp\INSTTABL.obj ..\temp\LISTING.obj 
+      ..\temp\MACRO.obj ..\temp\mainS.obj ..\temp\MOVEM.obj ..\temp\OBJECT.obj 
+      ..\temp\OPPARSE.obj ..\temp\optionsS.obj ..\temp\SYMBOL.obj 
+      ..\temp\STRUCTURED.obj ..\temp\editorOptions.obj ..\temp\help.obj 
+      ..\temp\findDialogS.obj ..\temp\replaceDialogS.obj"/>
     <RESFILES value="EDIT68K.res EASy68Kicons.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -44,10 +48,12 @@
       -IC:\source\EASy68k\Edit68k\RichEditPlus -src_suffix cpp -boa"/>
     <CFLAG1 value="-O2 -H=c:\PROGRA~1\borland\CBUILD~1\lib\vcl60.csm -Hc -Vx -Ve -X- -a8 -b- 
       -k- -vi -c -tW -tWM"/>
-    <PFLAGS value="-$Y- -$L- -$D- -$A8 -v -JPHNE -M"/>
+    <PFLAGS value="-N2C:\source\EASy68k\temp -N0C:\source\EASy68k\temp -$Y- -$L- -$D- -$A8 -v 
+      -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zn"/>
-    <LFLAGS value="-D&quot;&quot; -H:0x1000000 -Hc:0x100000 -Sc:0x10000 -aa -Tpe -x -Gn"/>
+    <LFLAGS value="-IC:\source\EASy68k\temp -D&quot;&quot; -H:0x1000000 -Hc:0x100000 -Sc:0x10000 -aa 
+      -Tpe -x -Gn"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
@@ -140,12 +146,17 @@ Item4=C:\Program Files\Borland\CBuilder5\Projects;$(BCB)\lib\obj;$(BCB)\lib
 Count=1
 Item0=$(BCB)\source\vcl
 
+[HistoryLists\hlIntOutputDir]
+Count=1
+Item0=C:\source\EASy68k\temp
+
 [HistoryLists\hlFinalOutputDir]
-Count=4
-Item0=C:\source\EASy68k\Edit68k\output\
-Item1=C:\source\EASy68k\Edit68k\output
-Item2=E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\output\
-Item3=E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\output
+Count=5
+Item0=C:\source\EASy68k\output\
+Item1=C:\source\EASy68k\Edit68k\output\
+Item2=C:\source\EASy68k\Edit68k\output
+Item3=E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\output\
+Item4=E:\EASy68K-master\EASy68k\Edit68Kv5.16.1\output
 
 [Debugging]
 DebugSourceDirs=$(BCB)\source\vcl

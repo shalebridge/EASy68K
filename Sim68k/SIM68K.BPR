@@ -3,12 +3,16 @@
 <PROJECT>
   <MACROS>
     <VERSION value="BCB.06.00"/>
-    <PROJECT value="C:\source\EASy68k\Sim68k\output\SIM68K.exe"/>
-    <OBJFILES value="SIM68K.obj SIM68Ku.obj UTILS.obj CODE2.obj CODE3.obj CODE4.obj CODE5.obj 
-      CODE6.obj CODE7.obj CODE8.obj CODE9.obj RUN.obj SIMOPS2.obj STARTSIM.obj 
-      CODE1.obj Stack1.obj Memory1.obj BREAKPOINTSu.obj aboutS.obj logU.obj 
-      BPoint.obj BPointExpr.obj simIOu.obj help.obj Optionsu.obj hardwareu.obj 
-      FullscreenOptions.obj LogfileDialogu.obj Net.obj findDialogS.obj"/>
+    <PROJECT value="C:\source\EASy68k\output\SIM68K.exe"/>
+    <OBJFILES value="..\temp\SIM68K.obj ..\temp\SIM68Ku.obj ..\temp\UTILS.obj ..\temp\CODE2.obj 
+      ..\temp\CODE3.obj ..\temp\CODE4.obj ..\temp\CODE5.obj ..\temp\CODE6.obj 
+      ..\temp\CODE7.obj ..\temp\CODE8.obj ..\temp\CODE9.obj ..\temp\RUN.obj 
+      ..\temp\SIMOPS2.obj ..\temp\STARTSIM.obj ..\temp\CODE1.obj 
+      ..\temp\Stack1.obj ..\temp\Memory1.obj ..\temp\BREAKPOINTSu.obj 
+      ..\temp\aboutS.obj ..\temp\logU.obj ..\temp\BPoint.obj 
+      ..\temp\BPointExpr.obj ..\temp\simIOu.obj ..\temp\help.obj 
+      ..\temp\Optionsu.obj ..\temp\hardwareu.obj ..\temp\FullscreenOptions.obj 
+      ..\temp\LogfileDialogu.obj ..\temp\Net.obj ..\temp\findDialogS.obj"/>
     <RESFILES value="SIM68K.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -39,10 +43,12 @@
     <IDLCFLAGS value="-I$(BCB)\Include\DirectX -I$(BCB)\include -I$(BCB)\include\vcl -src_suffix 
       cpp -boa"/>
     <CFLAG1 value="-O2 -Vx -Ve -X- -a8 -b- -k- -vi -c -tW -tWM"/>
-    <PFLAGS value="-$Y- -$L- -$D- -$A8 -v -JPHNE -M"/>
+    <PFLAGS value="-N2C:\source\EASy68k\temp -N0C:\source\EASy68k\temp -$Y- -$L- -$D- -$A8 -v 
+      -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zn"/>
-    <LFLAGS value="-D&quot;&quot; -H:0x1000000 -Hc:0x100000 -Sc:0x10000 -aa -Tpe -x -Gn"/>
+    <LFLAGS value="-IC:\source\EASy68k\temp -D&quot;&quot; -H:0x1000000 -Hc:0x100000 -Sc:0x10000 -aa 
+      -Tpe -x -Gn"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
@@ -105,8 +111,8 @@ Locale=1033
 CodePage=1252
 
 [Version Info Keys]
-CompanyName=EASy68K.com
-FileDescription=EASy68K Simulator
+CompanyName=Shalebridge
+FileDescription=EASy68K Simulator Fork
 FileVersion=5.17.0.0
 InternalName=
 LegalCopyright=GNU general public use license
@@ -136,10 +142,15 @@ Item0=$(BCB)\source\vcl
 Count=1
 Item0=_DEBUG
 
+[HistoryLists\hlIntOutputDir]
+Count=1
+Item0=C:\source\EASy68k\temp
+
 [HistoryLists\hlFinalOutputDir]
-Count=2
-Item0=C:\source\EASy68k\Sim68k\output\
-Item1=C:\source\EASy68k\Sim68k\output
+Count=3
+Item0=C:\source\EASy68k\output\
+Item1=C:\source\EASy68k\Sim68k\output\
+Item2=C:\source\EASy68k\Sim68k\output
 
 [Debugging]
 DebugSourceDirs=$(BCB)\source\vcl
