@@ -414,6 +414,7 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
 
       // Check for PC relative
       if (p[0] == '(' && p[1] == 'P' && p[2] == 'C') {
+        d->pc_sym = true;         // pe 2025-9-1
         // Check for plain PC relative
         if (p[3] == ')') {
           d->mode = PCDisp;
