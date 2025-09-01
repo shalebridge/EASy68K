@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 735
-  Top = 396
+  Left = 434
+  Top = 187
   Width = 744
   Height = 500
   Color = clBtnFace
@@ -956,12 +956,12 @@ object Form1: TForm1
     Left = 0
     Top = 169
     Width = 736
-    Height = 258
+    Height = 261
     Align = alClient
     TabOrder = 2
     object Splitter2: TSplitter
       Left = 1
-      Top = 193
+      Top = 196
       Width = 734
       Height = 7
       Cursor = crVSplit
@@ -970,7 +970,7 @@ object Form1: TForm1
     end
     object ScrollBar1: TScrollBar
       Left = 1
-      Top = 177
+      Top = 180
       Width = 734
       Height = 16
       Align = alBottom
@@ -985,7 +985,7 @@ object Form1: TForm1
       Left = 25
       Top = 1
       Width = 710
-      Height = 176
+      Height = 179
       Cursor = crArrow
       Style = lbOwnerDrawFixed
       Align = alClient
@@ -1004,7 +1004,7 @@ object Form1: TForm1
     end
     object Message: TMemo
       Left = 1
-      Top = 200
+      Top = 203
       Width = 734
       Height = 57
       TabStop = False
@@ -1026,7 +1026,7 @@ object Form1: TForm1
       Left = 1
       Top = 1
       Width = 24
-      Height = 176
+      Height = 179
       Align = alLeft
       BevelOuter = bvLowered
       TabOrder = 2
@@ -1034,7 +1034,7 @@ object Form1: TForm1
         Left = 1
         Top = 1
         Width = 22
-        Height = 174
+        Height = 177
         Align = alClient
         PopupMenu = BreakMenu
         OnMouseDown = breakPMouseDown
@@ -1044,7 +1044,7 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 427
+    Top = 430
     Width = 736
     Height = 19
     Panels = <

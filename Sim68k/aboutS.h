@@ -27,6 +27,9 @@ __published:
         TLabel *Label3;
         TLabel *Label5;
         TLabel *Label4;
+        TLabel *Label6;
+        TLabel *Label7;
+        TLabel *Label8;
         void __fastcall FormShow(TObject *Sender);
         void __fastcall FormKeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);

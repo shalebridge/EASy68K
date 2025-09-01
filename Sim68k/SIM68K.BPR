@@ -93,8 +93,8 @@
 IncludeVerInfo=1
 AutoIncBuild=0
 MajorVer=5
-MinorVer=16
-Release=1
+MinorVer=17
+Release=0
 Build=0
 Debug=0
 PreRelease=0
@@ -107,7 +107,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=EASy68K.com
 FileDescription=EASy68K Simulator
-FileVersion=5.16.1.0
+FileVersion=5.17.0.0
 InternalName=
 LegalCopyright=GNU general public use license
 LegalTrademarks=
@@ -137,8 +137,9 @@ Count=1
 Item0=_DEBUG
 
 [HistoryLists\hlFinalOutputDir]
-Count=1
-Item0=C:\source\EASy68k\Sim68k\output
+Count=2
+Item0=C:\source\EASy68k\Sim68k\output\
+Item1=C:\source\EASy68k\Sim68k\output
 
 [Debugging]
 DebugSourceDirs=$(BCB)\source\vcl

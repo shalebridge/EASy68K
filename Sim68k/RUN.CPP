@@ -11,6 +11,9 @@ routines are :
    Modified by: Charles Kelly
                 www.easy68k.com
 
+                Patrick Edwards
+                github.com/shalebridge/EASy68K
+
 ***************************************************************************/
 
 
@@ -870,7 +873,7 @@ int exec_inst()
                 mem_req (0x10, LONG_MASK, &PC);
                 exceptionHandler (1, 0, READ);
                 break;
-                
+
               case NO_PRIVILEGE : inc_cyc (34); // Privileged violation
                   OLD_PC -= 2;                  // pe 9-1-2025
                 mem_req (0x20, LONG_MASK, &PC);

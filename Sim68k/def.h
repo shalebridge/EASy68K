@@ -1,6 +1,8 @@
 //---------------------------------------------------------------------------
 //   Author: Charles Kelly
 //           www.easy68k.com
+//
+//  Modified: Patrick Edwards
 //---------------------------------------------------------------------------
 #ifndef defH
 #define defH
@@ -20,8 +22,8 @@ This file contains definitions used in the simulator source files.
 //typedef unsigned char uchar;
 
 // version info
-const char TITLE[] = "EASy68K Simulator v5.16.1"; // ***** change both *****
-const unsigned int VERSION =        0x00051001;    // ***** change both *****
+const char TITLE[] = "EASy68K Simulator v5.17.00 - Shalebridge Fork"; // ***** change both *****
+const unsigned int VERSION =        0x00051700;    // ***** change both *****
 
 // memory map types (bit flags which may be combined with OR logic)
 enum maptype {Invalid=0x01, Protected=0x02, Read=0x04, Rom=0x10};

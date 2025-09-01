@@ -9,6 +9,9 @@
 
 #include "extern.h"
 
+#include <cstdio>
+#include <iostream>
+
 #pragma hdrstop
 USEFORM("SIM68Ku.cpp", Form1);
 USEFORM("Stack1.cpp", StackFrm);
@@ -22,9 +25,24 @@ USEFORM("hardwareu.cpp", Hardware);
 USEFORM("FullscreenOptions.cpp", frmFullscreenOptions);
 USEFORM("LogfileDialogu.cpp", LogfileDialog);
 USEFORM("findDialogS.cpp", findDialogFrm);
+
+static void OpenConsole()
+{
+    if (AllocConsole()) {
+        FILE* fp;
+        freopen("CONOUT$", "w", stdout);
+        freopen("CONOUT$", "w", stderr);
+        freopen("CONIN$",  "r", stdin);
+        std::ios::sync_with_stdio(); // tie iostreams to C stdio
+        std::cout << "Console ready.\n";
+    }
+}
+
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
+  //OpenConsole();
+
   // Find out if we are able to use the multi-monitor APIs
   char SystemDirectory[MAX_PATH];
   DWORD dwShellDllVersion;
