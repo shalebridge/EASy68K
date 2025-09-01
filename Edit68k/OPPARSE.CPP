@@ -367,6 +367,11 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
       return p+3;
     }
 
+    // Check for PC rel symbol outside of parentheses
+    n = strchr(p, '(');         // PE 2025-8-28
+    if (containsSymbol(p+1, n)) //
+        d->pc_sym = true;       //
+
     // All other addressing modes start with a constant expression
     p = eval(p, &(d->data), &(d->backRef), errorPtr);
     if (*errorPtr < SEVERE) {
@@ -414,7 +419,6 @@ char *opParse(char *p, opDescriptor *d, int *errorPtr)
 
       // Check for PC relative
       if (p[0] == '(' && p[1] == 'P' && p[2] == 'C') {
-        d->pc_sym = true;         // pe 2025-9-1
         // Check for plain PC relative
         if (p[3] == ')') {
           d->mode = PCDisp;

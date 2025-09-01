@@ -1,6 +1,6 @@
 00001000 Starting Address
 Assembler used: EASy68K Editor/Assembler v5.17.00 - Shalebridge Fork
-Created On: 8/30/2025 7:11:09 PM
+Created On: 9/1/2025 11:55:52 AM
 
 00001000                             1          ORG     $1000
 00001000                             2  START
@@ -12,73 +12,77 @@ Created On: 8/30/2025 7:11:09 PM
 00001010  223B 4002                  8          MOVE.L (4+*,PC,D4.W),D1         ; 223B 4002
 00001014  223B 5002                  9          MOVE.L (2+*+2,PC,D5.W),D1       ; 223B 5002
 00001018  223B 6004                 10          MOVE.L (.$test+$2, PC,D6.W),D1
-0000101C                            11  .$test        
-0000101C                            12  ; ---- D2.W as index (ext word top nibble = 0x2, size=W so +0x0000) ----
-0000101C  D63B 2008                 13          ADD.B   (next+2,PC,D2.W),D3     ; D63B 2008   ; disp = +2
-00001020  D63B 2004                 14          ADD.B   (2+next,PC,D2.W),D3     ; D63B 2004   ; disp = +2
-00001024  4E71                      15  next:   NOP
-00001026  D63B 2008                 16          ADD.B   (next2,PC,D2.W),D3      ; D63B 2008
-0000102A  D63B 2001                 17          ADD.B   (1,PC,D2.W),D3          ; D63B 2001
-0000102E  4E71                      18          NOP
-00001030                            19  next2:
-00001030                            20  ; ---- D2.L as index (ext word top nibble = 0x2, size=L -> ext word adds 0x0800) ----
-00001030  203B 2800                 21          MOVE.L  (0,PC,D2.L),D0          ; 203B 2800
-00001034  203B 2802                 22          MOVE.L  (2,PC,D2.L),D0          ; 203B 2802
-00001038  203B 28F4                 23          MOVE.L  (-12,PC,D2.L),D0        ; 203B 28F4
-0000103C                            24  
-0000103C                            25  ; ---- D0.W as index (ext top nibble = 0x0) & various signed disps ----
-0000103C  203B 1000                 26          MOVE.L  (0,PC,D1.W),D0          ; 203B 1000
-00001040  203B 1001                 27          MOVE.L  (1,PC,D1.W),D0          ; 203B 1001
-00001044  203B 1002                 28          MOVE.L  (2,PC,D1.W),D0          ; 203B 1002
-00001048  203B 002C                 29          MOVE.L  (44,PC,D0.W),D0         ; 203B 002C
-0000104C  203B 00F4                 30          MOVE.L  (-12,PC,D0.W),D0        ; 203B 00F4
-00001050  203B 000D                 31          MOVE.L  (13,PC,D0.W),D0         ; 203B 000D
-00001054  203B 00D6                 32          MOVE.L  (-42,PC,D0.W),D0        ; 203B 00D6
-00001058                            33  
-00001058                            34  ; ---- Forward/backward label sensitivity ----
-00001058  D63B 2002                 35          ADD.B   (next3,PC,D2.W),D3      ; D63B 2002
-0000105C  4E71                      36  next3:  NOP
-0000105E  263B 20FC                 37          MOVE.L  (next3,PC,D2.W),D3      ; 263B 20FC
-00001062                            38          
-00001062                            39  ; ---- Forward/backward local label sensitivity ----
-00001062  D63B 2002                 40          ADD.B   (.next4,PC,D2.W),D3      ; D63B 2002
-00001066  4E71                      41  .next4:  NOP
-00001068  263B 20FC                 42          MOVE.L  (.next4,PC,D2.W),D3      ; 263B 20FC
-0000106C                            43          
-0000106C                            44  ; ---- Forward/backward local label sensitivity with offset ----
-0000106C  D63B 2004                 45          ADD.B   (2+.next5,PC,D2.W),D3      ; D63B 2004
-00001070  4E71                      46  .next5:  NOP
-00001072  263B 20FE                 47          MOVE.L  (.next5+2,PC,D2.W),D3      ; 263B 20FE
-00001076                            48          
-00001076                            49  ; ---- Range checking ----
-00001076  203B 007F                 50          MOVE.L  (127,PC,D0.W),D0        ; 203B 007F
-0000107A  203B 0080                 51          MOVE.L  (-128,PC,D0.W),D0       ; 203B 0080
-0000107E                            52  
-0000107E                            53          ; Out-of-range should error (expect assembler errors):
-Line 54 ERROR: Displacement out of range
-0000107E  203B 0080                 54          MOVE.L  (128,PC,D0.W),D0        ; ERROR: displacement out of range
-Line 55 ERROR: Displacement out of range
-00001082  203B 007F                 55          MOVE.L  (-129,PC,D0.W),D0       ; ERROR: displacement out of range
+0000101C                            11  .$test
+0000101C                            12  ; ---- Test label offset ----
+0000101C  41FA 000E                 13          LEA next(PC), A0
+00001020  41FA 000A                 14          LEA (next, PC), A0
+00001024                            15  
+00001024                            16  ; ---- D2.W as index (ext word top nibble = 0x2, size=W so +0x0000) ----
+00001024  D63B 2008                 17          ADD.B   (next+2,PC,D2.W),D3     ; D63B 2008   ; disp = +2
+00001028  D63B 2004                 18          ADD.B   (2+next,PC,D2.W),D3     ; D63B 2004   ; disp = +2
+0000102C  4E71                      19  next:   NOP
+0000102E  D63B 2008                 20          ADD.B   (next2,PC,D2.W),D3      ; D63B 2008
+00001032  D63B 2001                 21          ADD.B   (1,PC,D2.W),D3          ; D63B 2001
+00001036  4E71                      22          NOP
+00001038                            23  next2:
+00001038                            24  ; ---- D2.L as index (ext word top nibble = 0x2, size=L -> ext word adds 0x0800) ----
+00001038  203B 2800                 25          MOVE.L  (0,PC,D2.L),D0          ; 203B 2800
+0000103C  203B 2802                 26          MOVE.L  (2,PC,D2.L),D0          ; 203B 2802
+00001040  203B 28F4                 27          MOVE.L  (-12,PC,D2.L),D0        ; 203B 28F4
+00001044                            28  
+00001044                            29  ; ---- D0.W as index (ext top nibble = 0x0) & various signed disps ----
+00001044  203B 1000                 30          MOVE.L  (0,PC,D1.W),D0          ; 203B 1000
+00001048  203B 1001                 31          MOVE.L  (1,PC,D1.W),D0          ; 203B 1001
+0000104C  203B 1002                 32          MOVE.L  (2,PC,D1.W),D0          ; 203B 1002
+00001050  203B 002C                 33          MOVE.L  (44,PC,D0.W),D0         ; 203B 002C
+00001054  203B 00F4                 34          MOVE.L  (-12,PC,D0.W),D0        ; 203B 00F4
+00001058  203B 000D                 35          MOVE.L  (13,PC,D0.W),D0         ; 203B 000D
+0000105C  203B 00D6                 36          MOVE.L  (-42,PC,D0.W),D0        ; 203B 00D6
+00001060                            37  
+00001060                            38  ; ---- Forward/backward label sensitivity ----
+00001060  D63B 2002                 39          ADD.B   (next3,PC,D2.W),D3      ; D63B 2002
+00001064  4E71                      40  next3:  NOP
+00001066  263B 20FC                 41          MOVE.L  (next3,PC,D2.W),D3      ; 263B 20FC
+0000106A                            42          
+0000106A                            43  ; ---- Forward/backward local label sensitivity ----
+0000106A  D63B 2002                 44          ADD.B   (.next4,PC,D2.W),D3      ; D63B 2002
+0000106E  4E71                      45  .next4:  NOP
+00001070  263B 20FC                 46          MOVE.L  (.next4,PC,D2.W),D3      ; 263B 20FC
+00001074                            47          
+00001074                            48  ; ---- Forward/backward local label sensitivity with offset ----
+00001074  D63B 2004                 49          ADD.B   (2+.next5,PC,D2.W),D3      ; D63B 2004
+00001078  4E71                      50  .next5:  NOP
+0000107A  263B 20FE                 51          MOVE.L  (.next5+2,PC,D2.W),D3      ; 263B 20FE
+0000107E                            52          
+0000107E                            53  ; ---- Range checking ----
+0000107E  203B 007F                 54          MOVE.L  (127,PC,D0.W),D0        ; 203B 007F
+00001082  203B 0080                 55          MOVE.L  (-128,PC,D0.W),D0       ; 203B 0080
 00001086                            56  
-00001086                            57  ; ---- DISPLACEMENT ONLY (d16,PC) - 16-bit signed displacement ----
-00001086                            58          ; (d16,PC) encodes as one extension word with a full signed 16-bit disp
-00001086  323A 0000                 59          MOVE.W  (0,PC),D1               ; 323A 0000
-0000108A  323A 0002                 60          MOVE.W  (2,PC),D1               ; 323A 0002
-0000108E  323A FFFE                 61          MOVE.W  (-2,PC),D1              ; 323A FFFE
-00001092                            62  
-00001092  41FA 0000                 63          LEA     (0,PC),A0               ; 41FA 0000
-00001096  41FA 0006                 64          LEA     (6,PC),A0               ; 41FA 0006
-0000109A  41FA FFFA                 65          LEA     (-6,PC),A0              ; 41FA FFFA
-0000109E                            66          
-0000109E                            67          ; Forward symbol (forces the assembler to compute using the correct PC baseline)
-0000109E  263B 2004                 68          MOVE.L  (SYMBA,PC,D2.W),D3       ; 263B 20??   ; depends on where SYMA lands (should be signed 8-bit)
-000010A2  6002                      69          BRA.S   afterSYMBA               ; 6002
-000010A4  4E71                      70  SYMBA:   NOP
-000010A6                            71  afterSYMBA:
-000010A6  263B 20FC                 72          MOVE.L  (SYMBA,PC,D2.W),D3       ; 263B 20FC   ; back-ref: disp=-2 - sizeof(NOP)
-000010AA                            73  
-000010AA                            74          
-000010AA                            75          END START
+00001086                            57          ; Out-of-range should error (expect assembler errors):
+Line 58 ERROR: Displacement out of range
+00001086  203B 0080                 58          MOVE.L  (128,PC,D0.W),D0        ; ERROR: displacement out of range
+Line 59 ERROR: Displacement out of range
+0000108A  203B 007F                 59          MOVE.L  (-129,PC,D0.W),D0       ; ERROR: displacement out of range
+0000108E                            60  
+0000108E                            61  ; ---- DISPLACEMENT ONLY (d16,PC) - 16-bit signed displacement ----
+0000108E                            62          ; (d16,PC) encodes as one extension word with a full signed 16-bit disp
+0000108E  323A 0000                 63          MOVE.W  (0,PC),D1               ; 323A 0000
+00001092  323A 0002                 64          MOVE.W  (2,PC),D1               ; 323A 0002
+00001096  323A FFFE                 65          MOVE.W  (-2,PC),D1              ; 323A FFFE
+0000109A                            66  
+0000109A  41FA 0000                 67          LEA     (0,PC),A0               ; 41FA 0000
+0000109E  41FA 0006                 68          LEA     (6,PC),A0               ; 41FA 0006
+000010A2  41FA FFFA                 69          LEA     (-6,PC),A0              ; 41FA FFFA
+000010A6                            70          
+000010A6                            71          ; Forward symbol (forces the assembler to compute using the correct PC baseline)
+000010A6  263B 2004                 72          MOVE.L  (SYMBA,PC,D2.W),D3       ; 263B 20??   ; depends on where SYMA lands (should be signed 8-bit)
+000010AA  6002                      73          BRA.S   afterSYMBA               ; 6002
+000010AC  4E71                      74  SYMBA:   NOP
+000010AE                            75  afterSYMBA:
+000010AE  263B 20FC                 76          MOVE.L  (SYMBA,PC,D2.W),D3       ; 263B 20FC   ; back-ref: disp=-2 - sizeof(NOP)
+000010B2                            77  
+000010B2                            78          
+000010B2                            79          END START
 
 2 errors detected
 No warnings generated
@@ -87,12 +91,12 @@ No warnings generated
 SYMBOL TABLE INFORMATION
 Symbol-name         Value
 -------------------------
-AFTERSYMBA          10A6
-NEXT                1024
-NEXT2               1030
-NEXT3               105C
-NEXT3:NEXT4         1066
-NEXT3:NEXT5         1070
+AFTERSYMBA          10AE
+NEXT                102C
+NEXT2               1038
+NEXT3               1064
+NEXT3:NEXT4         106E
+NEXT3:NEXT5         1078
 START               1000
 START:$TEST         101C
-SYMBA               10A4
+SYMBA               10AC

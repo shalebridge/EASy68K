@@ -8,7 +8,11 @@ START
         MOVE.L (4+*,PC,D4.W),D1         ; 223B 4002
         MOVE.L (2+*+2,PC,D5.W),D1       ; 223B 5002
         MOVE.L (.$test+$2, PC,D6.W),D1
-.$test        
+.$test
+; ---- Test label offset ----
+        LEA next(PC), A0                ; 41FA 000E
+        LEA (next, PC), A0              ; 41FA 000A
+
 ; ---- D2.W as index (ext word top nibble = 0x2, size=W so +0x0000) ----
         ADD.B   (next+2,PC,D2.W),D3     ; D63B 2008   ; disp = +2
         ADD.B   (2+next,PC,D2.W),D3     ; D63B 2004   ; disp = +2
@@ -73,6 +77,7 @@ afterSYMBA:
 
         
         END START
+
 
 
 
